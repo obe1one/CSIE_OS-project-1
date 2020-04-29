@@ -11,7 +11,7 @@ int compare(const void *x, const void *y)
 	Process *a = (Process *)x;
 	Process *b = (Process *)y;
 	if(a->ready_time > b->ready_time) return 1;
-	return -1;
+	else return -1;
 }
 
 int main(int argc, char **argv)
@@ -30,6 +30,9 @@ int main(int argc, char **argv)
 		proc[i].is_execed = 0;
 	}
 	qsort(proc, proc_num, sizeof(Process), compare);
+	for(int i = 0; i < proc_num; i ++) {
+		printf("%s %d %d\n", proc[i].name, proc[i].ready_time, proc[i].exe_time);
+	}
 
 	if(strcmp(schd_type, "FIFO") == 0) {
 		schd_FIFO(proc, proc_num);
@@ -38,7 +41,7 @@ int main(int argc, char **argv)
 		policy = RR;
 	}
 	else if(strcmp(schd_type, "SJF") == 0) {
-		policy = SJF;
+		schd_SJF(proc, proc_num);
 	}
 	else if(strcmp(schd_type, "PSJF") == 0) {
 		policy = PSJF;
