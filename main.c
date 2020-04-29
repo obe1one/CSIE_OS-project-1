@@ -19,6 +19,7 @@ int main(int argc, char **argv)
 
 	for(int i = 0; i < proc_num; i ++) {
 		scanf("%s%d%d", proc[i].name, &proc[i].ready_time, &proc[i].exe_time);
+		proc[i].is_execed = 0;
 	}
 
 	if(strcmp(schd_type, "FIFO") == 0) {
