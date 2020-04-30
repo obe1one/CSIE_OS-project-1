@@ -178,10 +178,12 @@ void schd_PSJF(Process *proc, int proc_num)
 
 int select_RR(Process *proc, int ready_proc_num, int prev_proc)
 {
+	if(ready_proc_num == 0) return -1;
 	for(int i = 1; i < ready_proc_num; i++) {
 		if(proc[(i + prev_proc) % ready_proc_num].exe_time != 0)
 			return (i + prev_proc) % ready_proc_num;
 	}
+	if(prev_proc == -1) return 0;
 	if(proc[prev_proc].exe_time != 0) return prev_proc;
 	else return -1;
 }
