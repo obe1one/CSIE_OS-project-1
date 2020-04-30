@@ -226,6 +226,7 @@ void schd_RR(Process *proc, int proc_num)
 
 		if(now_proc != -1) {
 			proc[now_proc].exe_time--;
+			timer++;
 		}
 
 		if(now_proc != -1 && proc[now_proc].exe_time == 0) {
