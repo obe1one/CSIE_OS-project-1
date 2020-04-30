@@ -34,7 +34,8 @@ void schd_FIFO(Process *proc, int proc_num)
 				proc_get_ready(proc[now_proc].pid);
 			}
 		}
-		else {
+
+		if(now_proc != -1) {
 			proc[now_proc].exe_time--;
 		}
 
@@ -94,7 +95,8 @@ void schd_SJF(Process *proc, int proc_num)
 				proc_get_ready(proc[now_proc].pid);
 			}
 		}
-		else {
+
+		if(now_proc != -1) {
 			proc[now_proc].exe_time--;
 		}
 
@@ -113,6 +115,19 @@ void schd_SJF(Process *proc, int proc_num)
 
 }
 
+int select_PSJF(Process *proc, int ready_proc_num)
+{
+	int index = -1;
+	int min_time = 100000000;
+	for(int i = 0; i < ready_proc_num; i++) {
+		if(proc[i].exe_time < min_time && proc[i].exe_time != 0) {
+			index = i;
+			min_time = proc[i].exe_time;
+		}
+	}
+	return index;
+}
+
 void schd_PSJF(Process *proc, int proc_num)
 {
 	int now_proc = -1;
@@ -122,6 +137,43 @@ void schd_PSJF(Process *proc, int proc_num)
 
 	proc_assign_cpu(getpid(), CPU0);
 	proc_get_ready(getpid());
+
+	while(1) {
+		for(int i = ready_proc_num; i < proc_num; i++) {
+			if(proc[i].ready_time == now_time) {
+				proc[i].pid = proc_exec(proc[i]);
+				proc_exit_cpu(proc[i].pid);
+				ready_proc_num++;
+			}
+			else break;
+		}
+
+		int index = select_PSJF(proc, ready_proc_num);
+
+		if(index != -1) {
+			if(now_proc != index) {
+				now_proc = index;
+				proc_get_ready(proc[now_proc].pid);
+			}
+		}
+		
+		if(now_proc != -1) {
+			proc[now_proc].exe_time--;
+		}
+
+		if(now_proc != -1 && proc[now_proc].exe_time == 0) {
+			int statloc;
+			waitpid(proc[now_proc].pid, &statloc, 0);
+			printf("%s %d\n", proc[now_proc].name, proc[now_proc].pid);
+			now_proc = -1;
+			finished++;
+			if(finished == proc_num) break;
+		}
+		unit_time();
+		now_time++;
+	}
+	return ;
+
 }
 
 void schd_RR(Process *proc, int proc_num)
