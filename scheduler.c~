@@ -182,8 +182,7 @@ int select_RR(Process *proc, int ready_proc_num, int prev_proc)
 		if(proc[(i + prev_proc) % ready_proc_num].exe_time != 0)
 			return (i + prev_proc) % ready_proc_num;
 	}
-	if(proc[prev_proc].exe_time != 0) return prev_proc;
-	else return -1;
+	return -1;
 }
 
 void schd_RR(Process *proc, int proc_num)
