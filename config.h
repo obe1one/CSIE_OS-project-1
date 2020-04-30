@@ -7,6 +7,8 @@ typedef struct {
 
 #define ERR_EXIT(a) { perror(a) ; exit(1); }
 
+#define TIMEQ 500
+
 #define LOW_PRIO -20
 #define HIGHT_PRIO 20
 
