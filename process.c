@@ -54,7 +54,7 @@ int proc_exec(Process p)
 		syscall(GETTIME, &end, &tz);
 
 		char demsg[256];
-		sprintf(demsg, "[Project1] %d %lu.%09lu.%0.lu\n", getpid(), start.tv_sec, 1000 * start.tv_usec, end.tv_sec, 1000 * end.tv_usec);
+		sprintf(demsg, "[Project1] %d %lu.%09lu %lu.%09lu\n", getpid(), start.tv_sec, start.tv_usec*1000, end.tv_sec, end.tv_usec*1000);
 		syscall(PRINK, demsg);
 		exit(1);
 	}
