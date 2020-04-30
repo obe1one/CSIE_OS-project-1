@@ -222,7 +222,7 @@ void schd_RR(Process *proc, int proc_num)
 				now_proc = index;
 				time_qun = 0;
 				proc_get_ready(proc[now_proc].pid);
-				printf("context switch, now_proc = %d, now_time = %d\n", now_proc, now_time);
+				printf("context switch, now_proc = %d, now_time = %d, exe_time = %d\n", now_proc, now_time, proc[now_proc].exe_time);
 			}
 		}
 
