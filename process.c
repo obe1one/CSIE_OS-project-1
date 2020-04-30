@@ -7,6 +7,7 @@
 #include <errno.h>
 #include "config.h"
 #include <sched.h>
+#include <sys/resource.h>
 
 void unit_time()
 {
@@ -28,12 +29,9 @@ int proc_assign_cpu(int pid, int cpu)
 
 int proc_get_ready(int pid)
 {
-	struct sched_param param;
-	param.sched_priority = 0;
+	int en = setpriority(PRIO_PROCESS, pid, LOW_PRIO);
 
-	int en = sched_setscheduler(pid, SCHED_OTHER, &param);
-
-	if(en < 0) ERR_EXIT("sched_setscheduler\n");
+	if(en < 0) ERR_EXIT("proc get ready other\n");
 	
 	return en;
 }
@@ -53,12 +51,9 @@ int proc_exec(Process p)
 
 int proc_exit_cpu(int pid)
 {
-	struct sched_param param;
-	param.sched_priority = 0;
+	int en = setpriority(PRIO_PROCESS, pid, LOW_PRIO);
 
-	int en = sched_setscheduler(pid, SCHED_IDLE, &param);
-
-	if(en < 0) ERR_EXIT("sched_setscheduler\n");
+	if(en < 0) ERR_EXIT("sched_setscheduler, idle\n");
 	return en;
 }
 

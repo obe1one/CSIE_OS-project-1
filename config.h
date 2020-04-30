@@ -7,6 +7,9 @@ typedef struct {
 
 #define ERR_EXIT(a) { perror(a) ; exit(1); }
 
+#define LOW_PRIO -20
+#define HIGHT_PRIO 20
+
 #define FIFO 0
 #define RR 1
 #define SJF 2
