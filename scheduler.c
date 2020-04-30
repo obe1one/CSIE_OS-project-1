@@ -231,6 +231,7 @@ void schd_RR(Process *proc, int proc_num)
 			int statloc;
 			waitpid(proc[now_proc].pid, &statloc, 0);
 			printf("%s %d\n", proc[now_proc].name, proc[now_proc].pid);
+			prev_proc = now_proc;
 			now_proc = -1;
 			time_qun = 0;
 			finished++;
