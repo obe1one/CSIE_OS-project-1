@@ -29,10 +29,6 @@ int main(int argc, char **argv)
 		scanf("%s%d%d", proc[i].name, &proc[i].ready_time, &proc[i].exe_time);
 		proc[i].pid = -1;
 	}
-	qsort(proc, proc_num, sizeof(Process), compare);
-	for(int i = 0; i < proc_num; i ++) {
-		printf("%s %d %d\n", proc[i].name, proc[i].ready_time, proc[i].exe_time);
-	}
 
 	if(strcmp(schd_type, "FIFO") == 0) {
 		schd_FIFO(proc, proc_num);
