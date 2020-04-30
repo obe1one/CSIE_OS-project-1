@@ -29,7 +29,10 @@ int proc_assign_cpu(int pid, int cpu)
 
 int proc_get_ready(int pid)
 {
-	int en = setpriority(PRIO_PROCESS, pid, LOW_PRIO);
+	struct sched_param param;
+	param.sched_priority = 0;
+
+	int en = sched_setscheduler(pid, SCHED_OTHER, &param);
 
 	if(en < 0) ERR_EXIT("proc get ready other\n");
 	
@@ -51,7 +54,10 @@ int proc_exec(Process p)
 
 int proc_exit_cpu(int pid)
 {
-	int en = setpriority(PRIO_PROCESS, pid, LOW_PRIO);
+	struct sched_param param;
+	param.sched_priority = 0;
+
+	int en = sched_setscheduler(pid, SCHED_IDLE, &param);
 
 	if(en < 0) ERR_EXIT("sched_setscheduler, idle\n");
 	return en;
