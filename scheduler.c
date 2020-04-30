@@ -8,7 +8,7 @@
 
 void schd_FIFO(Process *proc, int proc_num)
 {
-	int now_proc = 0;
+	int now_proc = -1;
 	int now_time = 0;
 	int finished = 0;
 	int ready_proc_num = 0;
@@ -26,14 +26,23 @@ void schd_FIFO(Process *proc, int proc_num)
 
 			}
 		}
-		if(proc[now_proc].pid != -1) {
-			proc[now_proc].exe_time -= 1;
+
+		if(now_proc == -1) {
+			if(proc[finished].pid != -1) {
+				now_proc = finished;
+				proc_get_ready(proc[now_proc].pid);
+			}
 		}
+		else {
+			proc[now_proc].exe_time--;
+		}
+
+			
 		if(proc[now_proc].exe_time == 0) {
 			int statloc;
 			waitpid(proc[now_proc].pid, &statloc, 0);
 			printf("%s %d\n", proc[now_proc].name, proc[now_proc].pid);
-			now_proc++;
+			now_proc = -1;
 			finished++;
 			if(finished == proc_num) break;
 		}
@@ -42,6 +51,7 @@ void schd_FIFO(Process *proc, int proc_num)
 	}
 	return ;
 }
+
 
 
 
