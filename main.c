@@ -38,13 +38,13 @@ int main(int argc, char **argv)
 		schd_FIFO(proc, proc_num);
 	}
 	else if(strcmp(schd_type, "RR") == 0) {
-		policy = RR;
+		schd_RR(proc, proc_num);
 	}
 	else if(strcmp(schd_type, "SJF") == 0) {
-//		schd_SJF(proc, proc_num);
+		schd_SJF(proc, proc_num);
 	}
 	else if(strcmp(schd_type, "PSJF") == 0) {
-		policy = PSJF;
+		schd_PSJF(proc, proc_num);
 	}
 	else {
 		fprintf(stderr, "Wrong Type of scheduling\n");
