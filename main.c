@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 
 	for(int i = 0; i < proc_num; i ++) {
 		scanf("%s%d%d", proc[i].name, &proc[i].ready_time, &proc[i].exe_time);
-		proc[i].is_execed = 0;
+		proc[i].pid = -1;
 	}
 	qsort(proc, proc_num, sizeof(Process), compare);
 	for(int i = 0; i < proc_num; i ++) {
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 		policy = RR;
 	}
 	else if(strcmp(schd_type, "SJF") == 0) {
-		schd_SJF(proc, proc_num);
+//		schd_SJF(proc, proc_num);
 	}
 	else if(strcmp(schd_type, "PSJF") == 0) {
 		policy = PSJF;

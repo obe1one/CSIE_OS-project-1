@@ -1,5 +1,5 @@
-all: main.c config.h proc_schd.c
-	gcc main.c proc_schd.c config.h -o main
+all: main.c config.h scheduler.c process.c
+	gcc main.c scheduler.c process.c config.h -o main
 	rm -rf *~
 
 clean:
