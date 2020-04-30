@@ -8,6 +8,8 @@
 #include "config.h"
 #include <sched.h>
 #include <sys/resource.h>
+#include <sys/syscall.h>
+#include <sys/time.h>
 
 void unit_time()
 {
@@ -43,9 +45,17 @@ int proc_exec(Process p)
 {
 	int pid;
 	if((pid = fork()) == 0) {
+		struct timeval start, end;
+		struct timezone tz;
+		syscall(GETTIME, &start, &tz);
 		for(int i = 0; i < p.exe_time; i++) {
 			unit_time();
 		}
+		syscall(GETTIME, &end, &tz);
+
+		char demsg[256];
+		sprintf(demsg, "[Project1] %d %lu.%09lu.%0.lu\n", getpid(), start.tv_sec, 1000 * start.tv_usec, end.tv_sec, 1000 * end.tv_usec);
+		syscall(PRINK, demsg);
 		exit(1);
 	}
 	proc_assign_cpu(pid, CPU1);

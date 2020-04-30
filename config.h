@@ -9,6 +9,9 @@ typedef struct {
 
 #define TIMEQ 500
 
+#define GETTIME 96
+#define PRINK 333
+
 #define LOW_PRIO -20
 #define HIGHT_PRIO 20
 
